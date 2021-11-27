@@ -17,6 +17,7 @@ class ServidorHttp
     public ServidorHttp(int porta = 8080)
     {
         this.Porta = porta;
+        this.CriarHtmlExemplo();
         try
         {
             this.Controlador = new TcpListener(IPAddress.Parse("127.0.0.1"), this.Porta);
@@ -49,8 +50,10 @@ class ServidorHttp
                 if(textoRequisicao.Length > 0)
                 {
                     Console.WriteLine($"\n{textoRequisicao}\n");
+                    var bytesConteudo = Encoding.UTF8.GetBytes(this.HtmlExemplo, 0, this.HtmlExemplo.Length);
                     var byCabecalho = GerarCabecalho("HTTP/1.1","text/html;charset=utf-8","200",0);
-                    int bytesEnviados = conexao.Send(byCabecalho, byCabecalho.Length,0);
+                    int bytesEnviados = conexao.Send(byCabecalho, byCabecalho.Length, byCabecalho.Length);
+                    bytesEnviados += conexao.Send(bytesConteudo, bytesConteudo.Length, 0);
                     conexao.Close();
                     Console.WriteLine($"{bytesEnviados} bytes enviados em resposta à requisição #{numeroRequest}.");
                 }
