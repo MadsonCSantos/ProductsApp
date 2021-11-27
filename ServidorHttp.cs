@@ -67,7 +67,7 @@ class ServidorHttp
     texto.Append($"Content-Length: {qtdByte}{Environment.NewLine}{Environment.NewLine}");
     return Encoding.UTF8.GetBytes(texto.ToString());
     }
-    StringBuilder void CriarHtmlExemplo()
+    private void CriarHtmlExemplo()
     {
         StringBuilder html = new StringBuilder();
         html.Append("<!DOCTYPE html><html lang =\"pt-br\"><head><meta charset=\"UTF-8\">");
